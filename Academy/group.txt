@@ -1,0 +1,5 @@
+Student:       Pinkamn Jessie 20
+Teacher:       White Walter 50
+Graduate:      Schrader Hank 40
+Student:       Vercetti Tommy 30
+Teacher:       Diaz Ricardo 50

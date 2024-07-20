@@ -1,4 +1,5 @@
 #include<iostream>
+#include<fstream>
 #include<string>
 using std::cin;
 using std::cout;
@@ -58,13 +59,29 @@ public:
 	//       Methods:
 	virtual std::ostream& print(std::ostream& os)const
 	{
-		return os << last_name << " " << first_name << " " << age;
+		//os << strchr(typeid(*this).name(),' ')+ 1 << ":\t";
+	    return os << last_name << " " << first_name << " " << age;
+		
+	}
+	virtual std::ofstream& print(std::ofstream& ofs)const
+	{
+		ofs.width(15);
+		ofs << std::left;
+		ofs <<std::string (strchr(typeid(*this).name(), ' ') + 1) + ":";
+		ofs << last_name << " " << first_name << " " << age;
+		return ofs;
+		  
 	}
 };
 std::ostream& operator<<(std::ostream& os, const Human& obj)
 {
 	return obj.print(os);
 }
+std::ofstream& operator<<(std::ofstream& os, const Human& obj)
+{
+	return obj.print(os);
+}
+
 
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
 #define STUDENT_GIVE_PARAMETERS speciality,group, rating, attendance
@@ -221,6 +238,17 @@ void Print(Human* group[], const int n)
 		cout << delimiter << endl;
 	}
 }
+void Save(Human* group[], const int n, const std::string& filename)
+{
+	std::ofstream fout(filename);
+	for(int i = 0; i < n; i++)
+	{
+		fout << *group[i] << endl;
+	}
+	fout.close();
+	std::string cmd = "notepad " + filename;
+	system(cmd.c_str());
+}
 void Clear(Human* group[], const int n)
 {
 	for (int i = 0; i < n; i++)
@@ -233,7 +261,7 @@ void Clear(Human* group[], const int n)
 //#define INHERITANCE_1
 //#define INHERITANCE_2
 
-#define Polymorphism
+//#define Polymorphism
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -279,5 +307,6 @@ void main()
 		new Teacher("Diaz" ,"Ricardo",50,"Weapons distribution",20)
 	};
 	Print(group, sizeof(group) / sizeof(group[0]));
+	Save(group, sizeof(group) / sizeof(group[0]),"group.txt");
 	Clear(group, sizeof(group) / sizeof(group[0]));
 }
