@@ -141,6 +141,12 @@ namespace Geometry
 			Shape::info();
 		}
 	};
+	class Square :public Rectangle
+	{
+	public:
+		Square(double side,Color color):Rectangle(side,side,color){}
+		~Square(){}
+	};
 
 }
 void main()
